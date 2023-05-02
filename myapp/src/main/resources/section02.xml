@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 	<bean id="car1" class="com.shinhan.section02.Car"> -->
+<!-- 	</bean> -->
+	
+	<bean id="car2" class="com.shinhan.section02.Car">
+		<constructor-arg index="0" value="ABC모델"></constructor-arg>
+		<constructor-arg index="1" value="1000"></constructor-arg>
+	</bean>
+<!-- 	<bean id="car" class="com.shinhan.section02.Car">
+		<constructor-arg name="model" value="DDD모델"></constructor-arg>
+		<constructor-arg name="price" value="1000"></constructor-arg>
+	</bean> -->
+	<bean id="p1" class="com.shinhan.section02.People">
+		<property name="name" value="홍길동"></property>
+		<property name="age" value="20"></property>
+		<property name="car" ref="car2"></property>
+		
+	</bean>
+	
+		<bean id="samsung" class="com.shinhan.section01.SamsungTV"><!--  default 생성자로 만들어짐 -->
+		
+		
+	</bean>
+	
+	<bean id="lg" class="com.shinhan.section01.LgTV"><!--  default 생성자로 만들어짐 파일의 위치가 같아야함 -->	
+	</bean>	
+	<bean id="li1" class="com.shinhan.section02.License">
+		<property name="title" value="정보처리기사"></property>
+		<property name="year" value="2023"></property>
+	</bean>
+
+	<bean id="li2" class="com.shinhan.section02.License">
+		<property name="title" value="Adsp"></property>
+		<property name="year" value="2022"></property>
+	</bean>
+
+	<bean id="book1" class="com.shinhan.section02.Book"
+
+		p:title="이것이 자바다" p:price="30000" p:kind="IT" /> <!-- property 안쓰고 한번에 많은 변수 쓰기 -->
+	<bean id="book2" class="com.shinhan.section02.Book"
+
+		p:title="oracle" p:price="25000" p:kind="IT" /> <!-- property 안쓰고 한번에 많은 변수 쓰기 -->
+	<bean id="book3" class="com.shinhan.section02.Book"
+
+		p:title="니체의 말" p:price="18000" p:kind="철학" /> <!-- property 안쓰고 한번에 많은 변수 쓰기 -->
+		
+	<!-- scope의 default는 "singleton", 객체는 한 번만 생성!! 
+		scope="prototype" 얻을때마다 getBean() 생성된다.
+	-->	
+	
+	<bean id="p2" class="com.shinhan.section02.People" autowire="byType" scope="prototype">
+		<property name="name" value="홍길동"></property>
+		<property name="age" value="20"></property>
+		<!-- property변수의 car변수의 타입과 같은 타입의 bean이 있으면 자동주입한다. autowire="byType" -->
+		<!-- name="car"와 같은 이름의 bean이 있으면 자동주입한다 없으면 null, -->
+		<!-- <property name="car" ref="car3"></property> -->
+		<property name="major">
+			<list>
+				<value>컴퓨터공학</value> <!-- setter를 통해서 설정하므로 setter가 있어야함 -->
+				<value>영어영문</value>
+			</list>
+		</property>
+		<property name="licenseList"><!-- name=변수이름이랑 똑같이 주기 -->
+			<list>
+				<ref bean="li1" />
+				<ref bean="li2"/>
+			</list>
+	</property>
+	<property name="books">
+	<map>
+		<entry>
+			<key>
+				<value>첫번째 책</value>
+			</key>
+			<ref bean="book1"></ref>
+		</entry>
+		<entry>
+			<key>
+				<value>두번째 책</value>
+			</key>
+			<ref bean="book2"></ref>
+		</entry>
+	</map>
+	</property>
+	<property name="friend">
+		<set value-type="java.lang.String">
+			<value>양유진</value>
+			<value>전은정</value>
+		</set>
+	</property>
+	<property name="myprofile">
+		<props>
+			<prop key="birthday">20230604</prop>
+			<prop key="like">디저트먹기</prop>
+		</props>
+	</property>
+		
+	</bean>
+</beans>
