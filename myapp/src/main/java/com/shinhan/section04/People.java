@@ -9,7 +9,7 @@ import org.shinhan.section06.License;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shinhan.section05.Car;
+import com.shinhan.section02.Car;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class People {
 	
 	
 	@Autowired //만들어서 넣어라
-	private Car car;
+	private com.shinhan.section02.Car car;
 	private List<String> major;
 	private List<License> licenseList;
 	private Map<String, Book> books;
@@ -40,7 +40,7 @@ public class People {
 		return age;
 	}
 
-	public Car getCar() {
+	public com.shinhan.section02.Car getCar() {
 		return car;
 	}
 

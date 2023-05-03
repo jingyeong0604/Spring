@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Target:주업무 -->
+	<bean id="calcTarget" class = "com.firstzone.aop1.Calculator"></bean>
+	
+	<!-- Advise: 보조업무 -->
+	<bean id="logAdvice" class = "com.firstzone.aop1.LoggingAdvice"></bean>
+	
+	<!-- advisor= advise+ pointcut -->
+	<bean id="watchAdvice" class = "com.firstzone.aop1.StopWatchAdvice"></bean>
+	<bean id="myAdvice" class = "com.firstzone.aop1.MyAdvice"></bean>
+
+	<!--advisor = advise + pointcut -->
+	<bean id="advisor1"
+		class="org.springframework.aop.support.DefaultPointcutAdvisor"> <!-- spring이 제공하고 있는 advisor -->
+		<property name="advice" ref="logAdvice" /> <!-- ref이므로(참조) 위에 있는 id값과 똑같이 -->
+		<property name="pointcut">
+			<bean id="aa"
+				class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
+				<property name="expression">
+					<value>execution(* *(..))</value>  <!-- 모든 add()함수에 대해 적용 --> 
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="advisor2"
+		class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="watchAdvice" />
+		<property name="pointcut">
+			<bean id="bb"
+				class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
+				<property name="expression">
+					<value>execution(*(..))</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="advisor3"
+		class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="myAdvice" />
+		<property name="pointcut">
+			<bean id="cc"
+				class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
+				<property name="expression">
+					<value>execution(* *(..))</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+        
+        <!-- Aspect.. advisor+target = -->
+	<bean id="proxyCal"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="calcTarget" />
+		<property name="interceptorNames">
+			<list>
+				<value>advisor1</value> <!-- id값을 넣어줌 -->
+				<value>advisor2</value>
+				<value>advisor3</value>
+			</list>
+		</property>
+	</bean>
+</beans>

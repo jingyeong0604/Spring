@@ -8,7 +8,7 @@ public class SamsungTV implements TV{
 	}
 	
 	public SamsungTV() {
-		System.out.println("SamsungTV  기본 생성자" );
+		System.out.println("SamsungTV 기본 생성자" );
 	}
 	
 	@Override
